@@ -1,0 +1,1349 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>刘淑雯 | AI互联网产品经理</title>
+    <style>
+        /* 全局样式设定 */
+        :root {
+            --primary-color: #1a365d;
+            --accent-color: #3182ce;
+            --bg-color: #e8eef5;
+            --text-color: #2d3748;
+            --card-bg: #ffffff;
+            --content-max: 1080px;
+            --content-pad: 20px;
+            --layout-gap: 24px;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        html {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        html::-webkit-scrollbar {
+            display: none;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        body::-webkit-scrollbar {
+            display: none;
+        }
+        a {
+            text-decoration: none;
+            color: var(--accent-color);
+            transition: color 0.2s;
+        }
+        a:hover {
+            color: #2b6cb0;
+        }
+
+        .container {
+            max-width: var(--content-max);
+            margin: 0 auto;
+            padding: 0 var(--content-pad);
+        }
+
+        /* —— 顶部轮播：与下方主内容区左右对齐 —— */
+        .hero-carousel {
+            position: relative;
+            width: 100%;
+            max-width: var(--content-max);
+            margin: 0 auto 28px;
+            padding: 0 var(--content-pad);
+        }
+        .carousel-viewport {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            width: 100%;
+            border-radius: 12px;
+            scrollbar-width: none;
+        }
+        .carousel-viewport::-webkit-scrollbar {
+            display: none;
+        }
+        .carousel-slide {
+            flex: 0 0 100%;
+            scroll-snap-align: start;
+            min-height: min(42vh, 380px);
+            background: #cbd5e1 center/cover no-repeat;
+            position: relative;
+        }
+        /* 首屏：长版横图壁纸 */
+        .carousel-slide.carousel-slide--banner {
+            min-height: min(46vh, 420px);
+            background: #c7e8f5;
+        }
+        .carousel-slide.carousel-slide--banner .carousel-slide-img {
+            object-fit: cover;
+            object-position: center 42%;
+        }
+        .carousel-slide-img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 2;
+            width: 44px;
+            height: 44px;
+            border: none;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.88);
+            color: var(--primary-color);
+            font-size: 1.35rem;
+            line-height: 1;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .carousel-btn:hover {
+            background: #fff;
+        }
+        .carousel-prev { left: 12px; }
+        .carousel-next { right: 12px; }
+        .carousel-dots {
+            position: absolute;
+            bottom: 14px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            display: flex;
+            gap: 8px;
+        }
+        .carousel-dot {
+            width: 8px;
+            height: 8px;
+            padding: 0;
+            border: none;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.55);
+            cursor: pointer;
+            box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.12);
+        }
+        .carousel-dot.is-active {
+            background: #fff;
+            transform: scale(1.15);
+        }
+
+        /* —— 双栏主布局（左约 32% / 右约 68%） —— */
+        .container-wide {
+            max-width: var(--content-max);
+            margin: 0 auto;
+            padding: 0 var(--content-pad) 40px;
+        }
+        .layout-two-col {
+            display: grid;
+            grid-template-columns: minmax(260px, 32%) 1fr;
+            gap: var(--layout-gap);
+            align-items: start;
+        }
+        .layout-two-col > .sidebar-card,
+        .layout-two-col > .main-column {
+            margin: 0;
+            align-self: start;
+        }
+        @media (max-width: 900px) {
+            .layout-two-col {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .sidebar-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 24px 24px;
+            box-shadow: 0 4px 20px rgba(15, 23, 42, 0.06);
+            text-align: center;
+        }
+        .profile-avatar-wrap {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 16px;
+            border-radius: 50%;
+            overflow: hidden;
+            background: #e2e8f0;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+        }
+        .profile-avatar {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 28%;
+            display: block;
+        }
+        .profile-name {
+            margin: 0 0 6px;
+            font-size: 1.45rem;
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+        .profile-role {
+            margin: 0 0 20px;
+            font-size: 0.92rem;
+            color: var(--accent-color);
+            font-weight: 500;
+        }
+        .profile-meta {
+            margin: 0;
+            text-align: left;
+            font-size: 0.95rem;
+            color: #4a5568;
+        }
+        .profile-meta dt {
+            margin: 0 0 4px;
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--primary-color);
+            letter-spacing: 0.02em;
+        }
+        .profile-meta dd {
+            margin: 0 0 16px;
+            line-height: 1.55;
+            font-size: 0.92rem;
+        }
+        .profile-meta dd:last-of-type {
+            margin-bottom: 0;
+        }
+
+        .main-column {
+            display: flex;
+            flex-direction: column;
+            gap: var(--layout-gap);
+            min-width: 0;
+        }
+        .main-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 24px 24px;
+            box-shadow: 0 4px 20px rgba(15, 23, 42, 0.06);
+        }
+        .card-heading {
+            margin: 0 0 18px;
+            font-size: 1.25rem;
+            color: var(--primary-color);
+            font-weight: 600;
+            padding-bottom: 10px;
+            border-bottom: 3px solid var(--accent-color);
+            display: inline-block;
+            min-width: 5em;
+        }
+        .about-text {
+            font-size: 0.98rem;
+            color: #4a5568;
+            line-height: 1.75;
+            margin: 0 0 14px;
+        }
+        .about-text:last-child {
+            margin-bottom: 0;
+        }
+
+        /* 姓名下方联系方式（无框，与标题区一体） */
+        .hero-contact {
+            margin: 10px auto 18px;
+            font-size: 1.05rem;
+            color: #4a5568;
+            font-weight: 500;
+        }
+        .main-card .hero-contact {
+            margin: 14px 0 0;
+            text-align: left;
+        }
+        .hero-contact a {
+            color: var(--accent-color);
+            font-weight: 600;
+            text-decoration: underline;
+            text-underline-offset: 2px;
+        }
+        .hero-contact a:hover {
+            color: #2b6cb0;
+        }
+        .hero-contact .hero-tel {
+            color: #4a5568;
+            font-weight: 500;
+        }
+        .hero-contact-sep {
+            color: #a0aec0;
+            margin: 0 10px;
+            user-select: none;
+        }
+
+        /* 外语能力板块 */
+        .lang-card {
+            background: var(--card-bg);
+            padding: 22px 24px;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+            border-left: 4px solid var(--accent-color);
+        }
+        .lang-card p {
+            margin: 0 0 14px;
+            font-size: 0.98rem;
+            line-height: 1.7;
+            color: #4a5568;
+        }
+        .lang-card p:last-child {
+            margin-bottom: 0;
+        }
+        .lang-card strong {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        /* 模块通用样式 */
+        section {
+            padding: 30px 0;
+        }
+        .section-title {
+            font-size: 1.6rem;
+            color: var(--primary-color);
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* 列表项卡片 (教育、实习通用) */
+        .list-item {
+            display: flex;
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+            gap: 20px;
+            align-items: flex-start;
+        }
+        /* Logo 统一占位：实习/公司行同一宽高，文字列自然对齐 */
+        .list-logo {
+            flex-shrink: 0;
+            object-fit: contain;
+            box-sizing: border-box;
+        }
+        .list-logo.list-logo-school {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            object-fit: cover;
+            background: #f1f5f9;
+            box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.06);
+        }
+        .list-logo:not(.list-logo-school) {
+            width: 104px;
+            height: 104px;
+            border-radius: 12px;
+            background: #f1f5f9;
+            padding: 10px;
+        }
+        /* 官方黑底 Logo（如韶音） */
+        .list-logo.logo-on-dark:not(.list-logo-school) {
+            background: #0f0f0f;
+            padding: 0;
+        }
+        /* 字节跳动等需白底展示的 Logo */
+        .list-logo.logo-white-bg:not(.list-logo-school) {
+            background: #ffffff;
+            padding: 10px;
+            box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.08);
+        }
+        .list-content {
+            flex: 1;
+        }
+        .list-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+        .list-header h3 {
+            margin: 0;
+            font-size: 1.2rem;
+            color: var(--primary-color);
+        }
+        .list-header span {
+            font-size: 0.9rem;
+            color: #718096;
+        }
+        .list-subtitle {
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+        }
+        .list-desc {
+            font-size: 0.95rem;
+            color: #4a5568;
+            margin: 0;
+        }
+        .list-desc ul {
+            padding-left: 20px;
+            margin: 5px 0;
+        }
+
+        /* 个人作品集：下载链接 */
+        .portfolio-note {
+            font-size: 0.95rem;
+            color: #718096;
+            margin: -4px 0 18px;
+            line-height: 1.55;
+        }
+        .portfolio-download {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 10px;
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: var(--accent-color);
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+        .portfolio-download:hover {
+            color: #2b6cb0;
+        }
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 12px;
+            margin-top: 4px;
+            align-items: stretch;
+        }
+        @media (max-width: 768px) {
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .portfolio-cell {
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 12px 14px;
+            background: #f8fafc;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+        }
+        .portfolio-cell h3 {
+            margin: 0 0 8px;
+            font-size: clamp(0.85rem, 1.5vw, 0.95rem);
+            color: var(--primary-color);
+            line-height: 1.35;
+            font-weight: 600;
+        }
+        .portfolio-cell .list-desc {
+            margin-bottom: auto;
+            padding-bottom: 8px;
+            font-size: 0.82rem;
+        }
+        .portfolio-cell .portfolio-download {
+            margin-top: auto;
+            align-self: flex-start;
+        }
+
+        /* 技能标签 (Skills) */
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .skill-tag {
+            background: #ebf8ff;
+            color: var(--accent-color);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        .skills-subtitle {
+            font-size: 1.08rem;
+            color: var(--primary-color);
+            font-weight: 600;
+            margin: 26px 0 12px;
+            padding-bottom: 6px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .skill-tag.skill-tag-ai {
+            background: linear-gradient(135deg, #ebf8ff 0%, #e0e7ff 100%);
+            border: 1px solid rgba(49, 130, 206, 0.2);
+        }
+
+        /* 底部联系方式 (Footer) */
+        footer {
+            background: var(--primary-color);
+            color: #fff;
+            text-align: center;
+            padding: 40px 0;
+            margin-top: 50px;
+        }
+        footer a {
+            color: #fff;
+            margin: 0 10px;
+            text-decoration: underline;
+        }
+        
+        /* 响应式调整 */
+        @media (max-width: 600px) {
+            .list-item {
+                flex-direction: column;
+            }
+            .list-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        /* --- 新增：页面滚动浮现动画 --- */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- 新增：个人生活便当盒 (Bento Box) 样式 --- */
+        .bento-grid {
+            display: grid;
+            /* 桌面端排布，手机端会自动适配 */
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .bento-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s;
+            cursor: default;
+        }
+        .bento-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 25px rgba(49, 130, 206, 0.15);
+        }
+        .bento-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        .bento-title {
+            font-size: 0.9rem;
+            color: #718096;
+            margin-bottom: 5px;
+        }
+        .bento-value {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        /* 特殊高亮卡片 */
+        .bento-card.highlight {
+            background: linear-gradient(135deg, #ebf8ff 0%, #bee3f8 100%);
+        }
+
+        /* 在简历和工作之外：三列（置于 .container 内与上文同宽），各列可横向滑动；隐藏滑动条 */
+        .beyond-row {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 12px;
+            align-items: stretch;
+        }
+        @media (max-width: 768px) {
+            .beyond-row {
+                grid-template-columns: 1fr;
+            }
+        }
+        .beyond-window {
+            background: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+            overflow: hidden;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+        }
+        /* 图片靠右与白色卡片右内边对齐；单图或多图均从右侧排布 */
+        .beyond-scroll {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 12px 14px 14px;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            min-height: clamp(220px, 32vw, 380px);
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        .beyond-scroll::-webkit-scrollbar {
+            display: none;
+            height: 0;
+            width: 0;
+        }
+        .beyond-scroll > img {
+            flex: 0 1 auto;
+            display: block;
+            width: auto;
+            height: auto;
+            /* 放大：优先拉高可读性；宽图在栏内缩放 */
+            max-height: clamp(280px, 46vw, 520px);
+            max-width: 100%;
+            min-width: 0;
+            object-fit: contain;
+            object-position: right center;
+            border-radius: 8px;
+            scroll-snap-align: end;
+            margin-left: auto;
+        }
+
+        /* 手势控制面板（左下，避免与右下角扣子聊天浮窗重叠） */
+        #gesture-panel {
+            position: fixed;
+            left: 16px;
+            bottom: 16px;
+            right: auto;
+            z-index: 1500;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 8px;
+            max-width: min(260px, calc(100vw - 32px));
+            font-size: 0.8rem;
+            color: #2d3748;
+        }
+        #gesture-panel .gesture-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+        }
+        #gesture-toggle {
+            background: var(--primary-color);
+            color: #fff;
+            border: none;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(26, 54, 93, 0.25);
+        }
+        #gesture-toggle:hover {
+            filter: brightness(1.08);
+        }
+        #gesture-toggle:disabled {
+            opacity: 0.65;
+            cursor: wait;
+        }
+        #gesture-video-wrap {
+            display: none;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+            background: #000;
+        }
+        #gesture-panel.active #gesture-video-wrap {
+            display: block;
+        }
+        #gesture-video {
+            display: block;
+            width: 160px;
+            height: 120px;
+            object-fit: cover;
+            transform: scaleX(-1);
+        }
+        /* 扣子对话 iframe：仅提高层级，避免 !important 破坏 SDK 内部布局导致「加载失败」 */
+        iframe[src*="coze.cn"],
+        iframe[src*="coze.com"] {
+            z-index: 2147483640;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- file:// 打开时扣子聊天常无法发消息；请用本地 HTTP 访问（见下方黄色提示） -->
+    <div id="file-protocol-warn" role="status" style="display:none;position:fixed;top:0;left:0;right:0;z-index:2147483646;background:#fff8e6;color:#744210;padding:12px 16px;font-size:0.85rem;line-height:1.55;text-align:left;max-width:100%;border-bottom:1px solid #f6e0a2;box-shadow:0 2px 8px rgba(0,0,0,.06);">
+        <strong>提示：</strong>当前为本地文件（file://）打开，扣子 Web SDK 需要 <strong>http / https</strong> 地址才能正常发消息。<br><br>
+        <strong>① 本地预览（仅你自己、且终端要一直开着）</strong><br>
+        在终端先 <strong>cd 到放 profile.html 的那一层文件夹</strong>（与 <code>images</code>、<code>files</code> 同级），再启动；端口可自定，与浏览器里一致即可。<br>
+        示例（路径按你电脑修改）：<br>
+        <code style="background:#fff;padding:2px 6px;border-radius:4px;display:inline-block;margin-top:4px;">cd "/Users/emmaliu/Desktop/HKUST/ME/简历/profile website"</code><br>
+        <code style="background:#fff;padding:2px 6px;border-radius:4px;display:inline-block;margin-top:4px;">python3 -m http.server 8765</code><br>
+        浏览器打开：<code style="background:#fff;padding:2px 6px;border-radius:4px;">http://127.0.0.1:8765/profile.html</code>
+        （若你误在<strong>上一级</strong>目录执行了 http.server，请改用：<code style="background:#fff;padding:2px 4px;border-radius:4px;">http://127.0.0.1:8765/profile%20website/profile.html</code>）<br><br>
+        <strong>② 给别人访问 / 你关掉终端后仍能打开</strong><br>
+        <strong>localhost / 127.0.0.1 只能访问你自己电脑</strong>，别人无法打开；你关掉终端后本地预览也会断。需要把整站（含 profile.html、images、files 等）部署到 <strong>GitHub Pages、Netlify、Vercel、学校服务器</strong> 等，使用 <strong>https 公网链接</strong> 分享。
+    </div>
+    <script>
+      (function () {
+        if (location.protocol === 'file:') {
+          var w = document.getElementById('file-protocol-warn');
+          if (w) w.style.display = 'block';
+        }
+      })();
+    </script>
+
+    <div class="hero-carousel fade-in" aria-roledescription="carousel" aria-label="顶部轮播图">
+        <div class="carousel-viewport" id="carousel-viewport" tabindex="0">
+            <div class="carousel-slide carousel-slide--banner" data-slide="0">
+                <img class="carousel-slide-img" src="./images/1.jpg" alt="" loading="eager" decoding="async" width="1600" height="600">
+            </div>
+            <div class="carousel-slide carousel-slide--banner" data-slide="1">
+                <img class="carousel-slide-img" src="./images/2.jpg" alt="" loading="lazy" decoding="async" width="1600" height="600">
+            </div>
+            <div class="carousel-slide carousel-slide--banner" data-slide="2">
+                <img class="carousel-slide-img" src="./images/3.jpg" alt="" loading="lazy" decoding="async" width="1600" height="600">
+            </div>
+        </div>
+        <button type="button" class="carousel-btn carousel-prev" id="carousel-prev" aria-label="上一张">‹</button>
+        <button type="button" class="carousel-btn carousel-next" id="carousel-next" aria-label="下一张">›</button>
+        <div class="carousel-dots" id="carousel-dots" role="tablist" aria-label="轮播位置">
+            <button type="button" class="carousel-dot is-active" aria-label="第 1 张" aria-current="true" data-go="0"></button>
+            <button type="button" class="carousel-dot" aria-label="第 2 张" data-go="1"></button>
+            <button type="button" class="carousel-dot" aria-label="第 3 张" data-go="2"></button>
+        </div>
+    </div>
+
+    <div class="container-wide layout-two-col">
+        <aside class="sidebar-card fade-in">
+            <div class="profile-avatar-wrap">
+                <img src="./images/avatar.png" alt="刘淑雯" class="profile-avatar" width="120" height="120">
+            </div>
+            <h1 class="profile-name">刘淑雯</h1>
+            <p class="profile-role">互联网产品经理 / AI产品经理</p>
+            <dl class="profile-meta">
+                <dt>院校</dt>
+                <dd>香港科技大学（广州）· 人工智能硕士</dd>
+                <dt>方向</dt>
+                <dd>AI 产品 · 智能硬件交互</dd>
+                <dt>星座</dt>
+                <dd>金牛座</dd>
+                <dt>爱好</dt>
+                <dd>游戏、音乐、科技播客</dd>
+                <dt>坐标</dt>
+                <dd>中国 · 广东</dd>
+            </dl>
+        </aside>
+
+        <div class="main-column">
+            <section class="main-card fade-in" id="about">
+                <h2 class="card-heading">关于我</h2>
+                <p class="about-text">拥有计算机科学与人工智能双重学术背景，曾在字节跳动、面壁智能及韶音科技担任核心产品/数据实习生。致力于将前沿大语言模型与智能硬件相结合，创造极具商业价值与用户体验的 AI 产品。</p>
+                <div class="hero-contact" aria-label="联系方式">
+                    <span>Email: <a href="mailto:liu394704@gmail.com">liu394704@gmail.com</a></span>
+                    <span class="hero-contact-sep" aria-hidden="true">|</span>
+                    <span class="hero-tel">Tel: +86 198-397-12205</span>
+                </div>
+            </section>
+
+            <section class="main-card fade-in" id="portfolio">
+                <h2 class="card-heading">个人作品集</h2>
+                <p class="portfolio-note">与下方「项目经验」中的重点案例对应；如需了解背景、过程与成果材料，可下载各项目的详细说明文档。</p>
+                <!-- 维护：PDF 放在 ./files/ 目录，文件名与 href 一致 -->
+
+                <div class="portfolio-grid">
+                    <article class="portfolio-cell">
+                        <h3>基于城市针灸理念的社区嵌入式服务</h3>
+                        <p class="list-desc" style="margin: 0;">社区智能化与平台原型：调研、可视化与路演材料。</p>
+                        <a class="portfolio-download" href="./files/portfolio-urban-acupuncture.pdf" download>下载详细资料（PDF）</a>
+                    </article>
+                    <article class="portfolio-cell">
+                        <h3>智能家居陪伴机器人情感交互系统</h3>
+                        <p class="list-desc" style="margin: 0;">多模态交互与嵌入式 LLM：方案说明与职责拆解。</p>
+                        <a class="portfolio-download" href="./files/portfolio-robot-companion.pdf" download>下载详细资料（PDF）</a>
+                    </article>
+                    <article class="portfolio-cell">
+                        <h3>EI 情感交互灯</h3>
+                        <p class="list-desc" style="margin: 0;">硬件与 UI 设计：需求说明、原型与渲染展示。</p>
+                        <a class="portfolio-download" href="./files/portfolio-ei-lamp.pdf" download>下载详细资料（PDF）</a>
+                    </article>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <div class="container">
+        <section id="education" class="fade-in">
+            <h2 class="section-title">🎓 教育背景</h2>
+            
+            <div class="list-item">
+                <img src="./images/hkust.png" alt="香港科技大学（广州）校徽" class="list-logo list-logo-school">
+                <div class="list-content">
+                    <div class="list-header">
+                        <h3>香港科技大学广州校区 (QS60)</h3>
+                        <span>2025.09 ~ 2027.06</span>
+                    </div>
+                    <div class="list-subtitle">人工智能专业 | 硕士</div>
+                    <div class="list-desc">
+                        研究方向：AI for Hardware、智能嵌入式系统、LLM边端部署、智能硬件人机交互。
+                    </div>
+                </div>
+            </div>
+
+            <div class="list-item">
+                <img src="./images/njust.png" alt="南京理工大学校徽" class="list-logo list-logo-school">
+                <div class="list-content">
+                    <div class="list-header">
+                        <h3>南京理工大学 (211/双一流)</h3>
+                        <span>2020.09 ~ 2024.06</span>
+                    </div>
+                    <div class="list-subtitle">计算机科学与工程专业 | 本科 (GPA: 3.53/4.0)</div>
+                    <div class="list-desc">
+                        主修：机器学习、数据结构、数据建模与分析、算法理论基础、人机交互设计等。
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="experience" class="fade-in">
+            <h2 class="section-title">💼 实习经历</h2>
+
+            <div class="list-item">
+                <img src="./images/shokz.png" alt="韶音 SHOKZ" class="list-logo logo-on-dark">
+                <div class="list-content">
+                    <div class="list-header">
+                        <h3>韶音科技有限公司 (深圳)</h3>
+                        <span>2025.11 ~ 2026.03</span>
+                    </div>
+                    <div class="list-subtitle">产品创新部 - AI产品实习生</div>
+                    <div class="list-desc">
+                        <ul>
+                            <li><strong>AI可穿戴设备功能定义：</strong>主导基于生理监测(如心率)的AI功能需求挖掘，设计用户访谈与佩戴测试，测定AI健康功能的场景边界。</li>
+                            <li><strong>竞品反向工程与市场调研：</strong>深度调研智能耳机市场，输出结构化竞品研报，明确产品技术差异化定位。</li>
+                            <li><strong>数据体验度量体系：</strong>构建多维生理数据分析框架，将主观反馈与客观生物特征结合，支持底层算法演进与产品决策。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="list-item">
+                <img src="./images/modelbest.png" alt="面壁智能 ModelBest" class="list-logo">
+                <div class="list-content">
+                    <div class="list-header">
+                        <h3>面壁智能科技有限公司 (北京)</h3>
+                        <span>2025.02 ~ 2025.07</span>
+                    </div>
+                    <div class="list-subtitle">智能座舱 - AI产品实习生 (智能硬件方向)</div>
+                    <div class="list-desc">
+                        <ul>
+                            <li>参与完成多项智能座舱核心方案(登车问候、个性化记忆)的落地及PRD撰写，提升软硬件开发效率。</li>
+                            <li>设计并优化多模态感知交互链路，主导细化座舱场景的 Prompt 模板工程。</li>
+                            <li>搭建多轮对话与复杂场景的评测基准(Benchmark)，为轻量化模型提供高质量评测集。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="list-item">
+                <img src="./images/bytedance.png" alt="字节跳动 ByteDance" class="list-logo logo-white-bg">
+                <div class="list-content">
+                    <div class="list-header">
+                        <h3>字节跳动科技有限公司 (上海)</h3>
+                        <span>2024.01 ~ 2024.05</span>
+                    </div>
+                    <div class="list-subtitle">抖音电商 - 数据产品实习生 (流量工具方向)</div>
+                    <div class="list-desc">
+                        <ul>
+                            <li>撰写详细的产品需求文档，协助完成“千川”、“飞天”两个重要流量产品方案细化工作。</li>
+                            <li>通过专业看板跟踪产品效果，协助生服运营团队累计促成百万场直播10+，月累计直播成交额连续上升。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="fade-in">
+            <h2 class="section-title">🚀 项目经验</h2>
+            
+            <div class="list-item" style="flex-direction: column;">
+                <div class="list-content" style="width: 100%;">
+                    <div class="list-header">
+                        <h3>基于城市针灸理念的社区嵌入式服务</h3>
+                        <span style="color: var(--accent-color); font-weight: bold;">项目负责人</span>
+                    </div>
+                    <div class="list-desc">
+                        <p><strong>项目简介：</strong>本项目是针对一线城市城中村社区设计的服务式平台，集成了传感器、数据库，AI和可视化界面的智能监控管理系统。通过实时数据收集与AI辅助决策，为城市村庄提供高效的管理支持及预测潜在事件。</p>
+                        <p><strong>主要职责与成果：</strong></p>
+                        <ul>
+                            <li>主导前期社会调研，设计问卷与访谈，分析数据确定项目痛点并制定方案。</li>
+                            <li>负责设计平台原型、图像识别功能开发，协调团队完成系统搭建。</li>
+                            <li>主持项目路演并撰写说明书。在为期5天的开发周期内成功完成设计，于最终路演阶段名列前茅。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="list-item" style="flex-direction: column;">
+                <div class="list-content" style="width: 100%;">
+                    <div class="list-header">
+                        <h3>智能家居陪伴机器人情感交互系统开发</h3>
+                        <span style="color: var(--accent-color); font-weight: bold;">产品负责人</span>
+                    </div>
+                    <div class="list-desc">
+                        <p><strong>项目简介：</strong>该项目旨在构建一款具备自然情感表达与多模态交互能力的智能家居陪伴机器人。系统通过传感器输入、动作控制算法与大语言模型深度融合，使机器人能够理解自然语言、识别用户情绪，并以动作、姿态与声音进行生动表达。项目整体搭建包含硬件架构设计、运动控制、语音交互、大模型嵌入与情绪表达框架构建，目标是在家庭场景中实现更具陪伴感和情绪联系的机器人互动体验。</p>
+                        <p><strong>主要职责：</strong></p>
+                        <ul>
+                            <li>负责机器人动作与情绪关系的建模设计，构建情绪驱动的姿态、手势与动态表达机制，实现更自然的情感化身体语言。</li>
+                            <li>负责嵌入式大语言模型的集成与语义理解模块开发，搭建语义到行为的映射逻辑，使机器人能够根据上下文生成合适的动作与声音反馈。</li>
+                            <li>与负责硬件架构与运动控制的组长密切协作，完成系统接口对接、模块调试与跨团队协调，确保语言、动作与传感器数据流的统一与稳定。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="list-item" style="flex-direction: column;">
+                <div class="list-content" style="width: 100%;">
+                    <div class="list-header">
+                        <h3>情绪交互类产品--EI情感交互灯</h3>
+                        <span style="color: var(--accent-color); font-weight: bold;">产品负责人</span>
+                    </div>
+                    <div class="list-desc">
+                        <p><strong>项目简介：</strong>一款借助触感传递情感的智能产品。研究发现借助触感可以实现感情传递，基于此我们设计出一款触摸球实现双方情感的互动。球体有6种不同材质供用户选择，在不同情景下代表不同的情绪。为增加产品的功能，实现一物多用将安置触摸球的容器设计成小夜灯；同时为减小收纳空间，设计出可折叠式灯罩和便携的包装盒。在此基础上，设计对应的UI界面，使交互更加有效、便捷。</p>
+                        <p><strong>主要职责：</strong></p>
+                        <ul>
+                            <li>前期市场调研，收集相关产品资料并关注行业动态，收集相关用户数据并确定痛点，配合设计团队开展产品设计相关工作，确保产品设计可以贴合产品需求。</li>
+                            <li>使用 Figma 软件全权负责 UI 界面以及原型设计，配合设计同学完成 Rhino 建模及 Keyshot 产品渲染。</li>
+                            <li>撰写产品需求说明书，针对当前产品进一步用户评估，并且不断迭代优化。</li>
+                        </ul>
+                        <p><strong>项目成果：</strong>产品评估问卷调查收获用户九成以上好评，参加国家级设计比赛 NCDA 中荣获三等奖。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="list-item" style="flex-direction: column;">
+                <div class="list-content" style="width: 100%;">
+                    <div class="list-header">
+                        <h3>竞赛成果</h3>
+                    </div>
+                    <div class="list-desc">
+                        <ul>
+                            <li><strong>第十三届 MathorCup 高校数学建模挑战赛</strong>——国家级一等奖，参赛组组长</li>
+                            <li><strong>第十二届全国大学生数学建模竞赛</strong>——国家级一等奖，参赛组组长</li>
+                            <li><strong>第十二届全国大学生高等数学竞赛</strong>——国家级一等奖</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="fade-in">
+            <h2 class="section-title">🛠 专业技能</h2>
+            <div class="skills-list">
+                <span class="skill-tag">互联网产品策划</span>
+                <span class="skill-tag">PRD 文档撰写</span>
+                <span class="skill-tag">数据分析 (SPSS/MySQL)</span>
+                <span class="skill-tag">C++ / Python / Java</span>
+                <span class="skill-tag">用户体验 (UX) 调研</span>
+            </div>
+            <h3 class="skills-subtitle" id="skills-ai">🤖 AI 专项</h3>
+            <div class="skills-list">
+                <span class="skill-tag skill-tag-ai">大语言模型应用 (LLM)</span>
+                <span class="skill-tag skill-tag-ai">Prompt 工程与模板设计</span>
+                <span class="skill-tag skill-tag-ai">多模态 / AI 智能交互</span>
+                <span class="skill-tag skill-tag-ai">边端部署与轻量化模型</span>
+                <span class="skill-tag skill-tag-ai">场景评测与 Benchmark</span>
+            </div>
+        </section>
+
+        <section id="languages" class="fade-in">
+            <h2 class="section-title">🌐 外语能力</h2>
+            <div class="lang-card">
+                <p><strong>英语：</strong>雅思 7.0 / CET-6 600</p>
+                <p><strong>日语：</strong>没学过但资深二次元</p>
+                <p><strong>韩语：</strong>资深韩剧人，可以听懂</p>
+            </div>
+        </section>
+
+        <section id="lifestyle" class="fade-in">
+            <h2 class="section-title">✨ 关于我的另一面</h2>
+            <p style="color: #718096; font-size: 0.95rem; margin-top: -15px; margin-bottom: 20px;">工作之外，我是被这些事物驱动的：</p>
+            
+            <div class="bento-grid">
+                <div class="bento-card highlight">
+                    <div class="bento-icon">🔮</div>
+                    <div class="bento-title">MBTI & 星座</div>
+                    <div class="bento-value">INTJ / 金牛座</div>
+                </div>
+
+                <div class="bento-card">
+                    <div class="bento-icon">🎮</div>
+                    <div class="bento-title">近期沉迷</div>
+                    <div class="bento-value">塞尔达传说 / 双人成行</div>
+                </div>
+
+                <div class="bento-card">
+                    <div class="bento-icon">🎧</div>
+                    <div class="bento-title">精神氮泵</div>
+                    <div class="bento-value">周杰伦 / 科技播客</div>
+                </div>
+
+                <div class="bento-card">
+                    <div class="bento-icon">🎬</div>
+                    <div class="bento-title">最爱电影</div>
+                    <div class="bento-value">《星际穿越》</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="beyond-work" class="fade-in">
+            <h2 class="section-title">🦄 在简历和工作之外</h2>
+            <div class="beyond-row">
+                <div class="beyond-window">
+                    <div class="beyond-scroll" tabindex="0" role="region" aria-label="图集一，可横向滑动">
+                        <img src="./images/beyond-1.png" alt="">
+                    </div>
+                </div>
+                <div class="beyond-window">
+                    <div class="beyond-scroll" tabindex="0" role="region" aria-label="图集二，可横向滑动">
+                        <img src="./images/beyond-2.png" alt="">
+                    </div>
+                </div>
+                <div class="beyond-window">
+                    <div class="beyond-scroll" tabindex="0" role="region" aria-label="图集三，可横向滑动">
+                        <img src="./images/beyond-3.png" alt="">
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div id="gesture-panel" aria-label="手势滚动控制">
+        <div class="gesture-row">
+            <button type="button" id="gesture-toggle">开启手势滚动</button>
+        </div>
+        <div id="gesture-video-wrap">
+            <video id="gesture-video" playsinline muted></video>
+        </div>
+        <div id="gesture-hint">摄像头关闭。开启后移动食指指尖可上下滚动页面。</div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p style="font-size: 0.85rem; color: #a0aec0;">&copy; 2026 刘淑雯. All Rights Reserved.</p>
+            <p style="font-size: 0.78rem; color: #a0aec0; margin-top: 12px; line-height: 1.55; max-width: 720px; margin-left: auto; margin-right: auto;">
+                <strong style="color: #718096;">扣子「个人推荐官」若一直加载失败：</strong>
+                ① 确认脚本里已填入有效 <code style="font-size:0.75em;">PAT</code>（非占位符）；
+                ② 在扣子后台为该 Bot 的<strong>发布 / 网页嵌入</strong>里，把当前访问地址加入允许列表（例如 <code style="font-size:0.75em;">http://127.0.0.1:8765</code>、部署后的 <code style="font-size:0.75em;">https://你的域名</code>）；
+                ③ 换浏览器或关闭广告拦截后强刷；④ 按 F12 → Console / Network 查看红色报错。
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelectorAll('section, .sidebar-card, .hero-carousel').forEach(function (el) {
+                el.classList.add('fade-in');
+            });
+
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15
+            };
+
+            const observer = new IntersectionObserver(function (entries, obs) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        obs.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.fade-in').forEach(function (el) {
+                observer.observe(el);
+            });
+
+            (function initCarousel() {
+                var vp = document.getElementById('carousel-viewport');
+                if (!vp) return;
+                var slides = vp.querySelectorAll('.carousel-slide');
+                var dots = document.querySelectorAll('#carousel-dots .carousel-dot');
+                var prev = document.getElementById('carousel-prev');
+                var next = document.getElementById('carousel-next');
+                var idx = 0;
+
+                function setDots(active) {
+                    dots.forEach(function (d, j) {
+                        d.classList.toggle('is-active', j === active);
+                        d.setAttribute('aria-current', j === active ? 'true' : 'false');
+                    });
+                }
+
+                function go(i) {
+                    idx = (i + slides.length) % slides.length;
+                    vp.scrollTo({ left: idx * vp.clientWidth, behavior: 'smooth' });
+                    setDots(idx);
+                }
+
+                prev.addEventListener('click', function () { go(idx - 1); });
+                next.addEventListener('click', function () { go(idx + 1); });
+                dots.forEach(function (d) {
+                    d.addEventListener('click', function () {
+                        go(parseInt(d.getAttribute('data-go'), 10));
+                    });
+                });
+
+                var scrollEndTimer;
+                vp.addEventListener('scroll', function () {
+                    clearTimeout(scrollEndTimer);
+                    scrollEndTimer = setTimeout(function () {
+                        var w = vp.clientWidth;
+                        if (w < 1) return;
+                        var ni = Math.round(vp.scrollLeft / w);
+                        if (ni !== idx && ni >= 0 && ni < slides.length) {
+                            idx = ni;
+                            setDots(idx);
+                        }
+                    }, 100);
+                });
+
+                vp.addEventListener('keydown', function (e) {
+                    if (e.key === 'ArrowLeft') { e.preventDefault(); go(idx - 1); }
+                    if (e.key === 'ArrowRight') { e.preventDefault(); go(idx + 1); }
+                });
+            })();
+        });
+    </script>
+
+    <script type="module">
+        import { FilesetResolver, HandLandmarker } from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/vision_bundle.mjs";
+
+        const MP_VER = "0.10.14";
+        const WASM_BASE = `https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@${MP_VER}/wasm`;
+        const HAND_MODEL = "https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task";
+
+        const panel = document.getElementById("gesture-panel");
+        const btn = document.getElementById("gesture-toggle");
+        const video = document.getElementById("gesture-video");
+        const hint = document.getElementById("gesture-hint");
+
+        let stream = null;
+        let landmarker = null;
+        let rafId = 0;
+        /** MediaPipe Hand：食指指尖 INDEX_FINGER_TIP */
+        const INDEX_FINGER_TIP = 8;
+        /** 食指指尖 Y 样本，用于短窗口内位移判定 */
+        const ySamples = [];
+        const SAMPLE_WINDOW_MS = 400;
+        const MIN_SAMPLES = 6;
+        let lastScrollAt = 0;
+        let lastHandCount = -1;
+        const COOLDOWN_MS = 900;
+        const SCROLL_FRACTION = 0.42;
+        /** 归一化坐标下食指指尖位移阈值 */
+        const SWIPE_THRESHOLD = 0.055;
+
+        function setHint(text) {
+            if (hint) hint.textContent = text;
+        }
+
+        function stopCamera() {
+            if (rafId) {
+                cancelAnimationFrame(rafId);
+                rafId = 0;
+            }
+            if (stream) {
+                stream.getTracks().forEach((t) => t.stop());
+                stream = null;
+            }
+            video.srcObject = null;
+            panel.classList.remove("active");
+            btn.textContent = "开启手势滚动";
+            btn.disabled = false;
+            ySamples.length = 0;
+            lastHandCount = -1;
+            setHint("摄像头已关闭。再次开启后，移动食指指尖可上下滚动页面。");
+        }
+
+        async function startCamera() {
+            btn.disabled = true;
+            setHint("正在请求摄像头并加载模型…");
+            try {
+                stream = await navigator.mediaDevices.getUserMedia({
+                    video: { facingMode: "user", width: { ideal: 640 }, height: { ideal: 480 } },
+                    audio: false
+                });
+                video.srcObject = stream;
+                await video.play();
+
+                const vision = await FilesetResolver.forVisionTasks(WASM_BASE);
+                landmarker = await HandLandmarker.createFromOptions(vision, {
+                    baseOptions: {
+                        modelAssetPath: HAND_MODEL,
+                        delegate: "CPU"
+                    },
+                    runningMode: "VIDEO",
+                    numHands: 1
+                });
+
+                panel.classList.add("active");
+                btn.textContent = "关闭手势滚动";
+                btn.disabled = false;
+                setHint("已开启。食指指尖向上移 → 页面上滚；向下移 → 页面下滚。");
+                ySamples.length = 0;
+                lastHandCount = -1;
+                loop();
+            } catch (e) {
+                console.error(e);
+                stopCamera();
+                setHint("无法启动摄像头或模型加载失败。请上传到 HTTPS 页面、或用 localhost 打开，并允许摄像头。若用 file:// 打开，多数浏览器会限制。");
+                btn.disabled = false;
+            }
+        }
+
+        function loop() {
+            rafId = requestAnimationFrame(loop);
+            if (!landmarker || video.readyState < 2) return;
+
+            const now = performance.now();
+            const result = landmarker.detectForVideo(video, now);
+            const hands = result.landmarks;
+
+            if (!hands || hands.length < 1) {
+                ySamples.length = 0;
+                if (lastHandCount !== 0) {
+                    lastHandCount = 0;
+                    setHint("未检测到手。请将手放在画面前，用食指指尖上下移动。");
+                }
+                return;
+            }
+
+            if (lastHandCount !== 1) {
+                lastHandCount = 1;
+            }
+
+            const tip = hands[0][INDEX_FINGER_TIP];
+            const tipY = tip.y;
+
+            ySamples.push({ t: now, y: tipY });
+            const tCut = now - SAMPLE_WINDOW_MS;
+            while (ySamples.length && ySamples[0].t < tCut) {
+                ySamples.shift();
+            }
+            if (ySamples.length > 28) {
+                ySamples.splice(0, ySamples.length - 28);
+            }
+
+            if (now - lastScrollAt < COOLDOWN_MS) return;
+            if (ySamples.length < MIN_SAMPLES) return;
+
+            const dy = ySamples[ySamples.length - 1].y - ySamples[0].y;
+            if (dy > SWIPE_THRESHOLD) {
+                window.scrollBy({ top: window.innerHeight * SCROLL_FRACTION, behavior: "smooth" });
+                lastScrollAt = now;
+                ySamples.length = 0;
+                setHint("向下滚动 ✓ 食指指尖再次移动可继续滚动。");
+            } else if (dy < -SWIPE_THRESHOLD) {
+                window.scrollBy({ top: -window.innerHeight * SCROLL_FRACTION, behavior: "smooth" });
+                lastScrollAt = now;
+                ySamples.length = 0;
+                setHint("向上滚动 ✓ 食指指尖再次移动可继续滚动。");
+            }
+        }
+
+        btn.addEventListener("click", () => {
+            if (stream) stopCamera();
+            else startCamera();
+        });
+    </script>
+
+<!-- 扣子 Web SDK（国内 cn）。PAT 会出现在网页源码中，勿将含真实 PAT 的页面提交到公开仓库；部署前在下方填入 PAT，并到扣子后台把站点域名加入嵌入白名单。 -->
+<script src="https://lf-cdn.coze.cn/obj/unpkg/flow-platform/chat-app-sdk/1.2.0-beta.19/libs/cn/index.js"></script>
+<script>
+  (function () {
+    /**
+     * 将下方替换为你的扣子「个人访问令牌」(PAT)。若保持 YOUR_PAT_HERE，对话组件不会初始化（避免误提交密钥）。
+     * HR 访问：请把整站部署到 https 公网（如 GitHub Pages），并在扣子 Bot 发布/网页嵌入里添加该 https 域名。
+     */
+    var PAT = 'pat_08yvkSNFubgt4j3DnnaaaHqRUjjMmSgXAedarIbayjhLw1BNU9ZEN1rB6hK12OvX';
+
+    function boot() {
+      var SDK = typeof CozeWebSDK !== 'undefined' ? CozeWebSDK : window.cozeWebSDK;
+      if (!SDK || !SDK.WebChatClient) {
+        console.error('[Coze] SDK 未加载，请检查网络与 lf-cdn.coze.cn');
+        return;
+      }
+      if (!PAT || PAT.indexOf('YOUR_PAT') !== -1) {
+        console.error('[Coze] 请在 profile.html 底部脚本中将 PAT 设为有效令牌（勿提交公开仓库），否则对话无法加载');
+        return;
+      }
+      try {
+        /* ui.base.lang 必须设为 zh-CN，否则输入框会显示 chatInputPlaceholder 等 i18n 原文 key */
+        new SDK.WebChatClient({
+          config: {
+            bot_id: '7626282534829703222',
+          },
+          componentProps: {
+            title: '个人推荐官',
+          },
+          ui: {
+            base: {
+              lang: 'zh-CN',
+              layout: 'pc',
+              zIndex: 2147483630,
+            },
+          },
+          auth: {
+            type: 'token',
+            token: PAT,
+            onRefreshToken: async function () {
+              return PAT;
+            },
+          },
+        });
+        console.log('[Coze] WebChatClient 已创建（已启用 zh-CN 文案）');
+      } catch (e) {
+        console.error('[Coze] WebChatClient 异常:', e);
+      }
+    }
+
+    function run() {
+      function start() {
+        setTimeout(boot, 200);
+      }
+      if (window.addEventListener) {
+        window.addEventListener('load', start);
+      } else {
+        start();
+      }
+    }
+    run();
+  })();
+</script>
+
+</body>
+</html>
